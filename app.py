@@ -146,7 +146,7 @@ acc = accuracy_score(y_test, y_pred)
 
 if simple_mode:
     st.markdown(f"### 🛰️ Our AI got **{acc*100:.1f}%** of test signals right!")
-    st.write("It’s best at spotting big obvious planets, and sometimes mixes up candidates with false alarms.")
+    st.write("It's job is to study planets outside of our solar system and classify them. Now you can try entering values and learn about new exoplanets!")
 else:
     col1, col2, col3 = st.columns(3)
     col1.metric("Dataset size", f"{len(data):,}")
