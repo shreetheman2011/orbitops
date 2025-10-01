@@ -12,13 +12,13 @@ import matplotlib.pyplot as plt
 
 # ---------------------- PAGE CONFIG ----------------------
 st.set_page_config(
-    page_title="NASA Exoplanet Classifier",
+    page_title="Orbit-Ops | NASA Exoplanet Classifier",
     layout="wide",
     page_icon="🚀"
 )
 
 # ---------------------- SIDEBAR ----------------------
-st.sidebar.image("https://upload.wikimedia.org/wikipedia/commons/e/e5/NASA_logo.svg", width=120)
+st.sidebar.image("https://assets.spaceappschallenge.org/media/images/Gemini_Generated_Image_4zb8yt4zb8y.2e16d0ba.fill-300x250.png", width=120)
 st.sidebar.title("⚙️ Controls")
 
 # Mode toggle
