@@ -20,7 +20,7 @@ st.set_page_config(
 # ---------------------- CONSTANTS & MAPPINGS ----------------------
 FRIENDLY_TITLE = "Can We Find a New Planet?"
 FRIENDLY_SUB = (
-    "When a planet passes in front of a star the star gets a little dimmer. "
+    "When a planet outside of our solar system passes in front of a star, the star gets a little dimmer. "
     "Our AI learned how to spot those dips. Enter a few numbers and see what the AI thinks!"
 )
 
