@@ -230,7 +230,7 @@ user_inputs = {}
 for i, (col, friendly) in enumerate(friendly_pairs):
     with cols[i]:
         st.write(f"**{friendly}**")
-        tooltip = """A short help: how scientists measure this. If you are not sure, leave blank."""
+        tooltip = """Scientists use this for accurate measurements. If you are not sure, leave blank."""
         user_inputs[col] = st.text_input(label=friendly, help=tooltip)
 
 st.markdown("""
