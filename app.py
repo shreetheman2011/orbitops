@@ -41,10 +41,10 @@ NICKNAME_MAP = {
     "depth": "Dip in Brightness (ppm)",
 
     # Radius
-    "koi_prad": "Planet Size (Earths)",
-    "pl_rade": "Planet Size (Earths)",
+    "koi_prad": "Planet Size(Relative to Earth)",
+    "pl_rade": "Planet Size(Relative to Earth)",
     "pl_radj": "Planet Size (Jupiter radii)",
-    "prad": "Planet Size (Earths)",
+    "prad": "Planet Size(Relative to Earth)",
 
     # Temperature
     "koi_teq": "Temperature (K)",
@@ -61,7 +61,7 @@ NICKNAME_MAP = {
 DEFAULT_FRIENDLY_FEATURES = [
     "Orbit Length (days)",
     "Transit Time (hours)",
-    "Planet Size (Earths)",
+    "Planet Size(Relative to Earth)",
     "Dip in Brightness (ppm)",
 ]
 
