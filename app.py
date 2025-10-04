@@ -122,7 +122,7 @@ st.markdown(f"<div style='padding:20px;border-radius:10px;background:linear-grad
             f"<h1 style='color:white;text-align:center;margin:0;padding:6px'>{FRIENDLY_TITLE}</h1>"
             f"</div>", unsafe_allow_html=True)
 
-st.markdown("<p style='font-size:16px;margin-top:10px'>{FRIENDLY_SUB}</p>")
+st.markdown(f"<p style='font-size:16px;margin-top:10px'>{FRIENDLY_SUB}</p>", unsafe_allow_html=True)
 
 st.write("---")
 
