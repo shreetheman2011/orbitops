@@ -370,7 +370,7 @@ else:
         st.write("**What this means (for everyone):**")
         st.write("- If the AI says **Confirmed Planet**, it's probably a real planet.")
         st.write("- If it says **Candidate**, telescopes should look again to be sure.")
-        st.write("- If it says **False Alarm**, this signal probably came from something else (like noise).")
+        st.write("- If it says **False Alarm**, this signal probably came from something else.")
 
         if advanced_mode:
             st.markdown("---")
