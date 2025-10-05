@@ -19,10 +19,57 @@ st.set_page_config(
 
 # ---------------------- CONSTANTS & MAPPINGS ----------------------
 FRIENDLY_TITLE = "Can We Find a New Planet?"
-FRIENDLY_SUB = (
-    "When a planet outside of our solar system passes in front of a star, the star gets a little dimmer. "
-    "Our AI learned how to spot those dips. Enter a few numbers and see what the AI thinks!"
-)
+# ---- Replace the small FRIENDLY_SUB paragraph with this full explanation block ----
+EXPLANATION_HTML = """
+<div style="padding:14px;border-radius:10px;background:#f7fbff;border:1px solid #dbeefc;">
+  <h2 style="margin:4px 0 8px 0;color:#012a4a;">What does this tool do?</h2>
+
+  <p style="margin:6px 0;color:#03396c;">
+    <strong>Objective:</strong> The site looks at measurements from space telescopes to guess whether a dimming
+    of a star was caused by a planet passing in front of it. The computer (AI) learned from many examples
+    so it can say: <strong>Confirmed</strong> (likely a real planet), <strong>Candidate</strong> (maybe a planet),
+    or <strong>False Alarm</strong> (probably not a planet).
+  </p>
+
+  <h3 style="margin-top:10px;color:#014f86;">How to use — step by step</h3>
+  <ol style="color:#02457a;">
+    <li><strong>Pick data:</strong> Use the checkboxes on the left to choose ONE telescope dataset (Kepler, TESS, K2), or upload your own CSV file. Each row in the CSV is one signal someone measured from space.</li>
+    <li><strong>Teach the AI:</strong> Click <em>Teach the AI (Train Model)</em>. The computer reads the chosen data, practices on many examples, and learns patterns that real planets make. It keeps some examples aside to test how well it learned.</li>
+    <li><strong>Try a prediction:</strong> Fill in the small boxes (like Orbit Length, Planet Size). If you don't know a number, leave it blank — the AI will use a typical value for that field. </li>
+    <li><strong>See the result:</strong> Click <em>Predict</em>. The AI will show one big card: <span style="color:#1b9e77;"><strong>Confirmed</strong></span>, <span style="color:#e69f00;"><strong>Candidate</strong></span>, or <span style="color:#d55e00;"><strong>False Alarm</strong></span>. It also shows how confident it is (percentages).</li>
+    <li><strong>Scientist mode (optional):</strong> Toggle <em>Show Scientist Mode</em> on the left if you want the technical details (accuracy numbers, confusion matrix, feature importances).</li>
+  </ol>
+
+  <h3 style="margin-top:10px;color:#014f86;">Why the AI works (simple)</h3>
+  <p style="color:#02457a;">
+    Space telescopes watch a star and measure its brightness. If the brightness dips a little at regular times,
+    it might mean something (like a planet) passed in front. The AI learned what real planet signals look like
+    by studying thousands of these dips.
+  </p>
+
+  <h3 style="margin-top:10px;color:#014f86;">Uploading your own CSV — quick tips</h3>
+  <ul style="color:#02457a;">
+    <li>CSV = a spreadsheet saved as text. Each <em>row</em> is one signal; each <em>column</em> is a fact (number).</li>
+    <li>The file needs a column that says whether each row is a confirmed/candidate/false positive (often named <code>disposition</code>, <code>koi_disposition</code>, or similar).</li>
+    <li>We only use number columns like orbit period, transit duration, planet size, dip depth, temperature. Text columns (names) are ignored for training.</li>
+    <li>If your CSV is missing some numbers, that’s okay — the AI fills blanks with average values during training and prediction.</li>
+  </ul>
+
+  <h3 style="margin-top:10px;color:#014f86;">Important notes (please read)</h3>
+  <ul style="color:#02457a;">
+    <li>This AI is a helper, not proof. If it says <strong>Confirmed</strong>, it is highly likely, but not 100%</li>
+    <li>The AI learns from the dataset you choose — different telescope data can make it behave slightly differently.</li>
+    <li>Be careful: results depend on the quality and labels in your CSV. While we try to clean out misleading data as much as possible, bad or mislabeled data will confuse the AI.</li>
+  </ul>
+
+  <p style="color:#03396c;margin-top:8px;">
+    If anything is unclear, ask or try the example inputs in the app first. Have fun exploring — you might spot the next exoplanet!
+  </p>
+</div>
+"""
+
+
+
 
 # Universal nickname map across datasets
 NICKNAME_MAP = {
@@ -122,8 +169,7 @@ st.markdown(f"<div style='padding:20px;border-radius:10px;background:linear-grad
             f"<h1 style='color:white;text-align:center;margin:0;padding:6px'>{FRIENDLY_TITLE}</h1>"
             f"</div>", unsafe_allow_html=True)
 
-st.markdown(f"<p style='font-size:16px;margin-top:10px'>{FRIENDLY_SUB}</p>", unsafe_allow_html=True)
-
+st.markdown(EXPLANATION_HTML, unsafe_allow_html=True)
 st.write("---")
 
 # Sidebar controls (kept minimal but with an Advanced toggle)
@@ -224,7 +270,7 @@ if not available:
 friendly_pairs = available[:4]
 
 # Show a compact explanation of what each input means
-st.markdown("### ✋ Step 1 — Tell me about your signal (just a few numbers)")
+st.markdown("###  Step 1 — Tell me about your signal (just a few numbers)")
 cols = st.columns(len(friendly_pairs))
 user_inputs = {}
 for i, (col, friendly) in enumerate(friendly_pairs):
@@ -239,7 +285,7 @@ st.markdown("""
 
 # Teach / Train button
 st.markdown("---")
-if st.button("🚀 Teach the AI (Train Model)"):
+if st.button("Teach the AI (Train Model)"):
     with st.spinner("Teaching the AI, this may take a few seconds..."):
         # Build dataset for training using whatever features we have
         features = [col for col, _ in friendly_pairs]
@@ -296,13 +342,13 @@ if st.button("🚀 Teach the AI (Train Model)"):
             st.balloons()
             st.success(f"All done! Our AI was right about planets **{acc*100:.1f}%** of the time on test signals.")
             # simple interpretation sentences
-            st.write("- ✅ If you see 'Confirmed Planet' it means the AI thinks this signal looks very much like a real planet.")
-            st.write("- 🕵️ If you see 'Candidate' it means the AI is unsure — more observations could help.")
-            st.write("- ❌ If you see 'False Alarm' it means the AI thinks this signal is likely not a planet.")
+            st.write("- If you see 'Confirmed Planet' it means the AI thinks this signal looks very much like a real planet.")
+            st.write("- If you see 'Candidate' it means the AI is unsure — more observations could help.")
+            st.write("- If you see 'False Alarm' it means the AI thinks this signal is likely not a planet.")
 
 # Prediction area
 st.markdown("---")
-st.markdown("### 🎯 Try a Prediction — what does the AI think about this signal?")
+st.markdown("### Try a Prediction — what does the AI think about this signal?")
 if "orbit_model" not in st.session_state:
     st.info("Teach the AI first by pressing 'Teach the AI (Train Model)'.")
 else:
@@ -340,23 +386,28 @@ else:
         inv_map = {v:k for k,v in label_map.items()}
         label_str = inv_map[pred]
 
-        # Big friendly card
+       # Big friendly card
         if label_str == "confirmed":
-            st.markdown("<div style='padding:20px;border-radius:12px;background:#e6ffed;border:2px solid #2ecc71'>"
-                        "<h2>✅ Confirmed Planet</h2>"
-                        "<p>The AI is confident this looks like a real planet.</p>"
-                        "</div>", unsafe_allow_html=True)
+            st.markdown("""
+            <div style='padding:20px;border-radius:12px;background:#2ecc71;color:white;'>
+                <h2 style='color:white;'>Confirmed Planet</h2>
+                <p>This looks very much like a real planet. Great find!</p>
+            </div>
+            """, unsafe_allow_html=True)
         elif label_str == "candidate":
-            st.markdown("<div style='padding:20px;border-radius:12px;background:#fff8e6;border:2px solid #f0ad4e'>"
-                        "<h2>🕵️ Candidate Planet</h2>"
-                        "<p>The AI thinks this might be a planet but is not sure. More data could help.</p>"
-                        "</div>", unsafe_allow_html=True)
+            st.markdown("""
+            <div style='padding:20px;border-radius:12px;background:#f0ad4e;color:white;'>
+                <h2 style='color:white;'>Candidate Planet</h2>
+                <p>The AI thinks this might be a planet but isn't 100% sure. More data could help!</p>
+            </div>
+            """, unsafe_allow_html=True)
         else:
-            st.markdown("<div style='padding:20px;border-radius:12px;background:#ffecec;border:2px solid #e74c3c'>"
-                        "<h2>❌ False Alarm</h2>"
-                        "<p>The AI thinks this signal is likely not a planet.</p>"
-                        "</div>", unsafe_allow_html=True)
-
+            st.markdown("""
+            <div style='padding:20px;border-radius:12px;background:#e74c3c;color:white;'>
+                <h2 style='color:white;'>False Alarm</h2>
+                <p>The AI thinks this signal is likely not a planet.</p>
+            </div>
+            """, unsafe_allow_html=True)
         # show simple probabilities (friendly)
         st.markdown("**AI confidence:**")
         prob_df = pd.DataFrame({"class": [inv_map[i] for i in range(len(probs))], "probability": probs})
