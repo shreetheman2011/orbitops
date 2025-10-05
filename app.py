@@ -127,7 +127,7 @@ st.markdown(f"<p style='font-size:16px;margin-top:10px'>{FRIENDLY_SUB}</p>", uns
 st.write("---")
 
 # Sidebar controls (kept minimal but with an Advanced toggle)
-st.sidebar.title("Pick how you want to predict")
+st.sidebar.title("Pick which dataset you want to use")
 use_kepler = st.sidebar.checkbox("Kepler (classic)", value=True)
 use_tess = st.sidebar.checkbox("TESS (TOI)", value=False)
 use_k2 = st.sidebar.checkbox("K2 (campaigns)", value=False)
