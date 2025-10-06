@@ -338,6 +338,9 @@ if st.button("Teach the AI (Train Model)"):
             st.session_state["orbit_scaler"] = scaler
             st.session_state["orbit_features"] = features
             st.session_state["orbit_label_map"] = label_map
+            st.session_state["orbit_y_test"] = y_test
+            st.session_state["orbit_y_pred"] = y_pred
+
 
             st.balloons()
             st.success(f"All done! Our AI was right about planets **{acc*100:.1f}%** of the time on test signals.")
@@ -426,9 +429,14 @@ else:
         if advanced_mode:
             st.markdown("---")
             st.subheader("Scientist Mode: Quick Debug Info")
-            st.write("Accuracy on test set:" , f"{accuracy_score(y_test, y_pred)*100:.2f}%")
-            st.write("Confusion Matrix:")
-            st.write(confusion_matrix(y_test, y_pred))
+            if "orbit_y_test" in st.session_state and "orbit_y_pred" in st.session_state:
+                y_test = st.session_state["orbit_y_test"]
+                y_pred = st.session_state["orbit_y_pred"]
+                st.write("Accuracy on test set:" , f"{accuracy_score(y_test, y_pred)*100:.2f}%")
+                st.write("Confusion Matrix:")
+                st.write(confusion_matrix(y_test, y_pred))
+            else:
+                st.write("(Train the AI first to see detailed metrics)")
             # feature importance if available
             try:
                 if isinstance(model, RandomForestClassifier):
